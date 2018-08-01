@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Native Ads Examples</string>
+
+    <string name="native_demo_ad_unit_id">/6499/example/native</string>
+    <string name="native_template_id">11787894</string>
+    <string name="ad_attribution">Ad</string>
+    <string name="code_lab_example">Basic</string>
+    <string name="unified_ad_simple">Simple</string>
+    <string name="unified_ad_complex">Complex</string>
+    <string name="new_ad">Refresh Ad</string>
+    <string name="sponsored">Sponsored</string>
+    <string name="headline">Headline</string>
+    <string name="body">Body of ad goes here</string>
+
+</resources>

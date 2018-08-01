@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/native_ad"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:background="#dfdfdf"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/mainImage"
+        android:layout_width="250dp"
+        android:layout_height="175dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="start|top"
+        android:background="#ffffff"
+        android:clickable="true"
+        android:focusable="true"/>
+
+   <include layout="@layout/tv_ad_attribution"/>
+
+    <TextView
+        android:id="@+id/headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/mainImage"
+        android:layout_below="@+id/mainImage"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginTop="5dp"
+        android:text="@string/headline"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/headline"
+        android:layout_below="@+id/headline"
+        android:layout_gravity="start|bottom"
+        android:text="@string/body"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/mainImage"
+        android:layout_alignTop="@+id/mainImage"
+        android:padding="5dp"
+        android:text="@string/sponsored"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000000" />
+
+</RelativeLayout>
