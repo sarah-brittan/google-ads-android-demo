@@ -1,4 +1,4 @@
-# CustomNativeAdsDemo
+# Custom Native Ads Demo
 A demo of a few different ways of implementing DFP custom native ads.
 
 To use this, you will need to create new strings for the following:
