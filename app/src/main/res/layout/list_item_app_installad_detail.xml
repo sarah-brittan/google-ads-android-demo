@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/module_base"
+    android:layout_marginLeft="@dimen/module_base"
+    android:layout_marginRight="@dimen/module_base">
+
+    <com.google.android.gms.ads.formats.NativeAppInstallAdView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/native_app_install_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="locale"
+        android:visibility="visible">
+
+        <include
+            android:id="@+id/app_install_ad_layout"
+            layout="@layout/native_ad_template_cf_detail" />
+
+    </com.google.android.gms.ads.formats.NativeAppInstallAdView>
+</android.support.v7.widget.CardView>

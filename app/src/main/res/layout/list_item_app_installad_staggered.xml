@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.gms.ads.formats.NativeAppInstallAdView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/native_app_install_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible">
+
+    <include
+        android:id="@+id/app_install_ad_layout"
+        layout="@layout/native_ad_template_cf_listing_page" />
+
+</com.google.android.gms.ads.formats.NativeAppInstallAdView>
+

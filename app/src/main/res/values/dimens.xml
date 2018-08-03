@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="module_base">2dp</dimen>
+    <dimen name="module_3">3dp</dimen>
+    <dimen name="module_tiny">4dp</dimen>
+    <dimen name="module_base_3">6dp</dimen>
+    <dimen name="module_mid">10dp</dimen>
+    <dimen name="module_small">8dp</dimen>
+    <dimen name="module_medium">16dp</dimen>
+    <dimen name="module_base_9">18dp</dimen>
+    <dimen name="image_min_size">50dp</dimen>
+
+    <!-- font sizes -->
+    <dimen name="tiny_font">12sp</dimen>
+    <dimen name="small_font">14sp</dimen>
+    <dimen name="roboto_medium">16sp</dimen>
+    <dimen name="roboto_medium_big">18sp</dimen>
+
+    <dimen name="ad_gallery_margin_left_right">4dp</dimen>
+</resources>

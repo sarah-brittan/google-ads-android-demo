@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,15 @@ import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.formats.MediaView;
 import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.gms.ads.formats.NativeAdOptions;
+import com.google.android.gms.ads.formats.NativeAppInstallAd;
+import com.google.android.gms.ads.formats.NativeAppInstallAdView;
+import com.google.android.gms.ads.formats.NativeContentAd;
+import com.google.android.gms.ads.formats.NativeContentAdView;
 import com.google.android.gms.ads.formats.NativeCustomTemplateAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAdView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.List;
 
@@ -39,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.adView)
     FrameLayout adContainer;
-
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
@@ -65,7 +71,11 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.unified_complex:
                                 bottomNavigationView.getMenu().findItem(R.id.unified_complex).setChecked(true);
-                                  loadComplexUnifiedAd();
+                                loadComplexUnifiedAd();
+                                break;
+                            case R.id.pan_listing:
+                                bottomNavigationView.getMenu().findItem(R.id.pan_listing).setChecked(true);
+                                loadPanameraStaggeredInstallAd();
                                 break;
                         }
                         return false;
@@ -88,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadCodeLabAd() {
         AdLoader adLoader = new AdLoader.Builder(getApplicationContext(),
-                getString(R.string.codelab_test_ad_unit_id))
-                .forCustomTemplateAd(getString(R.string.native_template_id),
+                getString(R.string.codelab_demo_custom_ad_unit_id))
+                .forCustomTemplateAd(getString(R.string.codelab_template_id),
                         new NativeCustomTemplateAd.OnCustomTemplateAdLoadedListener() {
                             @Override
                             public void onCustomTemplateAdLoaded(NativeCustomTemplateAd ad) {
@@ -97,6 +107,13 @@ public class MainActivity extends AppCompatActivity {
                             }
                         },
                         null)
+                .withAdListener(new AdListener() {
+                    @Override
+                    public void onAdFailedToLoad(int errorCode) {
+                        Toast.makeText(MainActivity.this, "Failed to load native ad: "
+                                + errorCode, Toast.LENGTH_SHORT).show();
+                    }
+                })
                 .build();
 
         adLoader.loadAd(new PublisherAdRequest.Builder()
@@ -135,17 +152,21 @@ public class MainActivity extends AppCompatActivity {
     // ======= SIMPLE UNIFIED NATIVE AD ========
 
     protected void loadSimpleUnifiedNativeAd() {
-        AdLoader adLoader = new AdLoader.Builder(this,  getString(R.string.native_demo_ad_unit_id))
+        String adUnitId = getString(R.string.native_demo_ad_unit_id);
+        Log.d("Ad-Unit", "Using Ad Unit " + adUnitId);
+        AdLoader adLoader = new AdLoader.Builder(this, adUnitId)
                 .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
                     @Override
                     public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+
                         displaySimpleUnifiedAd(adContainer, unifiedNativeAd);
                     }
                 })
                 .withAdListener(new AdListener() {
                     @Override
                     public void onAdFailedToLoad(int errorCode) {
-                        // Handle the failure by logging, altering the UI, and so on.
+                        Toast.makeText(MainActivity.this, "Failed to load native ad: "
+                                + errorCode, Toast.LENGTH_SHORT).show();
                     }
                 })
                 .withNativeAdOptions(new NativeAdOptions.Builder()
@@ -183,11 +204,14 @@ public class MainActivity extends AppCompatActivity {
     // ======= COMPLEX UNIFIED NATIVE AD ========
 
     protected void loadComplexUnifiedAd() {
+        String adUnitId = getString(R.string.native_demo_ad_unit_id);
+        Log.d("Ad-Unit", "Using Ad Unit " + adUnitId);
+
         VideoOptions videoOptions = new VideoOptions.Builder()
-              //  .setStartMuted(startVideoAdsMuted.isChecked())
+                //  .setStartMuted(startVideoAdsMuted.isChecked())
                 .build();
 
-        AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.native_demo_ad_unit_id))
+        AdLoader adLoader = new AdLoader.Builder(this, adUnitId)
                 .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
                     @Override
                     public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
@@ -211,11 +235,10 @@ public class MainActivity extends AppCompatActivity {
 
         adLoader.loadAd(new PublisherAdRequest.Builder().build());
 
-       // videoStatus.setText("");
+        // videoStatus.setText("");
     }
 
     private void displayComplexUnifiedAd(ViewGroup parent, final UnifiedNativeAd nativeAd) {
-
         UnifiedNativeAdView adView = (UnifiedNativeAdView) getLayoutInflater()
                 .inflate(R.layout.complex_unified_ad, null);
 
@@ -231,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
                 // Publishers should allow native ads to complete video playback before refreshing
                 // or replacing them with another ad in the same UI location.
                 newAdButton.setEnabled(true);
-              //  videoStatus.setText("Video status: Video playback has ended.");
+                //  videoStatus.setText("Video status: Video playback has ended.");
                 super.onVideoEnd();
             }
         });
@@ -256,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
             mainImageView.setImageDrawable(images.get(0).getDrawable());
 
             newAdButton.setEnabled(true);
-         //   videoStatus.setText("Video status: Ad does not contain a video asset.");
+            //   videoStatus.setText("Video status: Ad does not contain a video asset.");
         }
 
         adView.setHeadlineView(adView.findViewById(R.id.ad_headline));
@@ -312,6 +335,131 @@ public class MainActivity extends AppCompatActivity {
             adView.getAdvertiserView().setVisibility(View.VISIBLE);
         }
 
+        adView.setNativeAd(nativeAd);
+
+        parent.removeAllViews();
+        parent.addView(adView);
+    }
+
+    // ========= PAN LISTING / STAGGERED ==========
+
+    private void loadPanameraStaggeredInstallAd() {
+        String adUnitId = getString(R.string.native_demo_ad_unit_id);
+        Log.d("Ad-Unit", "Using Ad Unit " + adUnitId);
+
+
+        AdLoader adLoader = new AdLoader.Builder(getApplicationContext(), adUnitId)
+                .forAppInstallAd(new NativeAppInstallAd.OnAppInstallAdLoadedListener() {
+                    @Override
+                    public void onAppInstallAdLoaded(NativeAppInstallAd appInstallAd) {
+                        displayPanameraStaggeredInstallAd(adContainer, appInstallAd);
+                    }
+                })
+                .forContentAd(new NativeContentAd.OnContentAdLoadedListener() {
+                    @Override
+                    public void onContentAdLoaded(NativeContentAd contentAd) {
+                        displayPanameraStaggeredContentAd(adContainer, contentAd);
+                    }
+                })
+                .withAdListener(new AdListener() {
+                    @Override
+                    public void onAdFailedToLoad(int errorCode) {
+                        newAdButton.setEnabled(true);
+                        Toast.makeText(MainActivity.this, "Failed to load native ad: "
+                                + errorCode, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .build();
+
+        adLoader.loadAd(new PublisherAdRequest.Builder()
+                .build());
+
+    }
+
+    private void displayPanameraStaggeredContentAd(ViewGroup parent, NativeContentAd nativeAd) {
+        NativeContentAdView adView = (NativeContentAdView) getLayoutInflater()
+                .inflate(R.layout.list_item_content_ad_staggered, null);
+
+        TextView mAdHeadline = adView.findViewById(R.id.ad_headline);
+        MediaView mAdImage = adView.findViewById(R.id.ad_image);
+        TextView mAdBody = adView.findViewById(R.id.ad_body);
+        TextView mAdCTA = adView.findViewById(R.id.call_to_action);
+        // ImageView mAdLogo = adView.findViewById(R.id.ad_logo);
+        //TextView mAdRating = adView.findViewById(R.id.app_rating_text);
+        TextView mAdAdvertiser = adView.findViewById(R.id.ad_advertiser);
+
+        adView.setHeadlineView(mAdHeadline);
+        adView.setMediaView(mAdImage);
+        adView.setBodyView(mAdBody);
+        adView.setCallToActionView(mAdCTA);
+        // adView.setIconView(mAdLogo);
+
+        mAdHeadline.setText(nativeAd.getHeadline());
+        mAdBody.setText(nativeAd.getBody());
+        mAdCTA.setVisibility(View.VISIBLE);
+        mAdCTA.setText(nativeAd.getCallToAction());
+
+        List<NativeAd.Image> images = nativeAd.getImages();
+
+//        if (mAdImage != null && images != null && images.size() > 0) {
+//            String url = images.get(0).getUri().toString();
+//      //      ImageLoader.getInstance().displayImage(url, mAdImage, ImageUtils.getDisplayOptions());
+//        }
+
+        // assign native ad object to the native view and make visible
+        adView.setNativeAd(nativeAd);
+
+        parent.removeAllViews();
+        parent.addView(adView);
+    }
+
+    private void displayPanameraStaggeredInstallAd(ViewGroup parent, final NativeAppInstallAd nativeAd) {
+
+        NativeAppInstallAdView adView = (NativeAppInstallAdView) getLayoutInflater()
+                .inflate(R.layout.list_item_app_installad_staggered, null);
+
+        TextView mAdHeadline = adView.findViewById(R.id.ad_headline);
+        MediaView mAdImage = adView.findViewById(R.id.ad_image);
+        TextView mAdBody = adView.findViewById(R.id.ad_body);
+        TextView mAdCTA = adView.findViewById(R.id.call_to_action);
+        ImageView mAdLogo = adView.findViewById(R.id.ad_logo);
+        TextView mAdRating = adView.findViewById(R.id.app_rating_text);
+        TextView mAdAdvertiser = adView.findViewById(R.id.ad_advertiser);
+
+        adView.setHeadlineView(mAdHeadline);
+        adView.setMediaView(mAdImage);
+        adView.setBodyView(mAdBody);
+        adView.setCallToActionView(mAdCTA);
+        adView.setIconView(mAdLogo);
+        adView.setStarRatingView(mAdRating);
+
+        mAdHeadline.setText(nativeAd.getHeadline());
+        mAdBody.setText(nativeAd.getBody());
+        mAdCTA.setVisibility(View.VISIBLE);
+        mAdCTA.setText(nativeAd.getCallToAction());
+
+        if (mAdRating != null)
+            mAdRating.setText("Rating: " + nativeAd.getStarRating());
+
+        //                                       List<NativeAd.Image> images = nativeAd.getImages();
+
+//        if (mAdImage != null && images != null && images.size() > 0) {
+//            String url = images.get(0).getUri().toString();
+//       //     ImageLoader.getInstance().displayImage(url, mAdImage, ImageUtils.getDisplayOptions());
+//        }
+
+        NativeAd.Image logoImage = nativeAd.getIcon();
+        if (mAdLogo != null && logoImage != null) {
+            mAdLogo.setVisibility(View.VISIBLE);
+            mAdLogo.setScaleType(ImageView.ScaleType.CENTER);
+            String url = logoImage.getUri().toString();
+            ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
+            ImageLoader.getInstance().displayImage(url, mAdLogo, ImageUtils.getDisplayOptions());
+        } else {
+            mAdLogo.setVisibility(View.GONE);
+
+        }
+        // assign native ad object to the native view and make visible
         adView.setNativeAd(nativeAd);
 
         parent.removeAllViews();

@@ -7,6 +7,12 @@
         android:title="@string/code_lab_example"
         android:icon="@drawable/ic_border_style"
         app:showAsAction="ifRoom" />
+    <!--<item-->
+        <!--android:id="@+id/unified_simple"-->
+        <!--android:enabled="true"-->
+        <!--android:title="@string/unified_ad_simple"-->
+        <!--android:icon="@drawable/ic_border_top"-->
+        <!--app:showAsAction="ifRoom" />-->
     <item
         android:id="@+id/unified_simple"
         android:enabled="true"
@@ -18,5 +24,12 @@
         android:enabled="true"
         android:title="@string/unified_ad_complex"
         android:icon="@drawable/ic_border_vertical"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/pan_listing"
+        android:enabled="true"
+        android:title="@string/pan_listing"
+        android:icon="@drawable/ic_border_all"
         app:showAsAction="ifRoom" />
 </menu>

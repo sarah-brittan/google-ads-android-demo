@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">Native Ads Examples</string>
-
     <string name="native_demo_ad_unit_id">/6499/example/native</string>
-    <string name="native_template_id">11787894</string>
+    <string name="codelab_demo_custom_ad_unit_id">/13657173/codelab</string>
+    <string name="codelab_template_id">10054853</string>
     <string name="ad_attribution">Ad</string>
-    <string name="code_lab_example">Basic</string>
-    <string name="unified_ad_simple">Simple</string>
-    <string name="unified_ad_complex">Complex</string>
+    <string name="code_lab_example">Custom</string>
+    <string name="unified_ad_simple">Basic Unified</string>
+    <string name="unified_ad_complex">Complex Unified</string>
+    <string name="pan_listing">Install/Content</string>
+    <string name="banner">Banner</string>
+    <string name="fluid_ad">Fluid</string>
     <string name="new_ad">Refresh Ad</string>
     <string name="sponsored">Sponsored</string>
     <string name="headline">Headline</string>

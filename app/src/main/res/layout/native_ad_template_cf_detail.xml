@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="110dp">
+
+    <MediaView
+        android:id="@+id/ad_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/module_tiny"
+        android:layout_marginStart="@dimen/module_tiny"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/module_small"
+        android:layout_marginLeft="@dimen/module_medium"
+        android:layout_marginRight="@dimen/module_small"
+        android:layout_marginStart="@dimen/module_medium"
+        android:layout_toEndOf="@+id/ad_logo"
+        android:layout_toRightOf="@id/ad_logo"
+        android:gravity="start"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ad_headline"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/module_base_3"
+            android:ellipsize="end"
+            android:gravity="start|top"
+            android:maxLength="25"
+            android:maxLines="1"
+            android:minLines="1"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/small_font" />
+
+        <TextView
+            android:id="@+id/app_rating_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/module_base"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:includeFontPadding="false"
+            android:text=""
+            android:textColor="@color/black_54"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/ad_body"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/module_tiny"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:textDirection="locale"
+            android:includeFontPadding="false"
+            android:maxLength="90"
+            android:maxLines="2"
+            android:minLines="2"
+            android:text=""
+            android:textColor="@color/black_54"
+            android:textSize="@dimen/tiny_font" />
+
+        <TextView
+            android:id="@+id/ad_advertiser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/module_small"
+            android:layout_marginStart="@dimen/module_small"
+            android:layout_marginTop="@dimen/module_tiny"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="2"
+            android:minLines="1"
+            android:text=""
+            android:textColor="@color/post_ad_success_tw_button_bg"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/call_to_action"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginTop="18dp"
+            android:gravity="bottom"
+            android:text="VISIT SITE"
+            android:textAllCaps="true"
+            android:textColor="@color/call_to_actionbtn_color"
+            android:textSize="@dimen/tiny_font"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/ad_badge"
+        android:layout_width="@dimen/module_base_9"
+        android:layout_height="@dimen/module_base_9"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/module_tiny"
+        android:layout_marginStart="@dimen/module_tiny"
+        android:layout_marginTop="@dimen/module_tiny"
+        app:srcCompat="@drawable/ad_badge" />
+
+</RelativeLayout>

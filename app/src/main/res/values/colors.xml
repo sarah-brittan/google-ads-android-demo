@@ -6,5 +6,10 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="ad_yellow">#FFCC66</color>
+    <color name="call_to_actionbtn_border_color">#FF3F55</color>
+    <color name="call_to_actionbtn_color">#FF3F55</color>
+    <color name="post_ad_success_tw_button_bg">#00ACED</color>
+    <color name="black_87">#de000000</color>
+    <color name="black_54">#8a000000</color>
 
 </resources>
