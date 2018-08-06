@@ -7,4 +7,5 @@
     android:layout_alignParentBottom="true"
     android:layout_centerHorizontal="true"
     ads:adSize="FLUID"
+    android:descendantFocusability="blocksDescendants"
     ads:adUnitId="@string/fluid_demo_ad_unit_id" />

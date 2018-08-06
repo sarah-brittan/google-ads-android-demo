@@ -13,6 +13,6 @@
     <FrameLayout
         android:id="@+id/ad_view_container"
         android:layout_width="match_parent"
-        android:background="@color/ad_yellow"
-        android:layout_height="500dp" />
+        android:layout_height="500dp"
+        android:descendantFocusability="blocksDescendants" />
 </LinearLayout>

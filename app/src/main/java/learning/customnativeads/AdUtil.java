@@ -1,38 +1,55 @@
 package learning.customnativeads;
 
+import android.content.Context;
+
 import com.google.android.gms.ads.AdSize;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdUtil{
-   private static Map<String, AdType> adTypes = new HashMap<>();
+public class AdUtil {
+    private static Map<String, AdType> adTypes = new HashMap<>();
 
-    public AdType getAdType(String adName){
-        initAdTypes();
+
+    public static AdType getAdType(Context context, String adName) {
+        initAdTypes(context);
         return adTypes.get(adName);
     }
 
-    private void initAdTypes(){
-        if(adTypes.isEmpty()){
+    private static void initAdTypes(Context context) {
+        if (adTypes.isEmpty()) {
             String adName = "BANNER - 320x50";
             int width = 320;
             int height = 50;
-            String adUnitId = "/6499/example/banner";
+            String adUnitId = context.getString(R.string.banner_demo_ad_unit_id);
             AdSize adSize = AdSize.BANNER;
+            adTypes.put(adName, new AdType(width, height, adUnitId, adSize));
+
+            adName = "FLUID";
+            width = -1;
+            height = -1;
+            adUnitId = context.getString(R.string.fluid_demo_ad_unit_id);
+            adSize = AdSize.FLUID;
             adTypes.put(adName, new AdType(width, height, adUnitId, adSize));
 
             adName = "FULL_BANNER - 468x60";
             width = -1;
             height = 60;
-            adUnitId = "/full_banner";
+            adUnitId = context.getString(R.string.banner_ad_unit_id);
             adSize = AdSize.FULL_BANNER;
+            adTypes.put(adName, new AdType(width, height, adUnitId, adSize));
+
+            adName = "SMART_BANNER";
+            width = -1;
+            height = -1;
+            adUnitId = context.getString(R.string.smart_banner_demo_ad_unit_id);
+            adSize = AdSize.SMART_BANNER;
             adTypes.put(adName, new AdType(width, height, adUnitId, adSize));
 
             adName = "LARGE_BANNER - 320x100";
             width = 320;
             height = 100;
-            adUnitId = "/large_banner";
+            adUnitId = context.getString(R.string.banner_demo_ad_unit_id);
             adSize = AdSize.LARGE_BANNER;
             adTypes.put(adName, new AdType(width, height, adUnitId, adSize));
 
@@ -46,7 +63,7 @@ public class AdUtil{
             adName = "MEDIUM_RECTANGLE - 300x250";
             width = 300;
             height = 250;
-            adUnitId = "/medium_rectangle";
+            adUnitId = context.getString(R.string.banner_ad_unit_id);
             adSize = AdSize.MEDIUM_RECTANGLE;
             adTypes.put(adName, new AdType(width, height, adUnitId, adSize));
 
@@ -57,19 +74,6 @@ public class AdUtil{
             adSize = AdSize.WIDE_SKYSCRAPER;
             adTypes.put(adName, new AdType(width, height, adUnitId, adSize));
 
-            adName = "SMART_BANNER";
-            width = -1;
-            height = -1;
-            adUnitId = "ca-app-pub-3940256099942544/6300978111";
-            adSize = AdSize.SMART_BANNER;
-            adTypes.put(adName, new AdType(width, height, adUnitId, adSize));
-
-            adName = "FLUID";
-            width = -1;
-            height = -1;
-            adUnitId = "/6499/example/apidemo/fluid";
-            adSize = AdSize.FLUID;
-            adTypes.put(adName, new AdType(width, height, adUnitId, adSize));
         }
     }
 

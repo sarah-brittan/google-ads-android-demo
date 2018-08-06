@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -76,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 //                                bottomNavigationView.getMenu().findItem(R.id.unified_simple).setChecked(true);
 //                                break;
                             case R.id.choose_ad:
+                                bottomNavigationView.getMenu().findItem(R.id.choose_ad).setChecked(true);
                                 loadChooseAd();
                                 break;
                             case R.id.unified_complex:
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         View chooseAdLayout = getLayoutInflater()
                 .inflate(R.layout.fragment_select_type, adContainer);
 
-       final FrameLayout publisherAdView = chooseAdLayout.findViewById(R.id.ad_view_container);
+        final FrameLayout publisherAdView = chooseAdLayout.findViewById(R.id.ad_view_container);
 
         Spinner spinner = chooseAdLayout.findViewById(R.id.ad_type_elector_spinner);
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(MainActivity.this,"Nothing selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Nothing selected", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     private void displayChosenAd(String adName, final FrameLayout nativeAdContainer) {
 
         nativeAdContainer.removeAllViews();
-        final AdType adType = new AdUtil().getAdType(adName);
+        final AdType adType = AdUtil.getAdType(this, adName);
 
         PublisherAdView nativeAdView = new PublisherAdView(this);
         nativeAdView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Native Ads Examples</string>
     <string name="native_demo_ad_unit_id">/6499/example/native</string>
+    <string name="banner_demo_ad_unit_id">/6499/example/banner</string>
+    <string name="smart_banner_demo_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="fluid_demo_ad_unit_id">/6499/example/apidemo/fluid</string>
     <string name="codelab_demo_custom_ad_unit_id">/13657173/codelab</string>
     <string name="codelab_template_id">10054853</string>
@@ -17,14 +19,17 @@
     <string name="body">Body of ad goes here</string>
 
     <string-array name="ad_types">
+        <item>FLUID</item>
         <item>BANNER - 320x50</item>
-        <!--<item>FULL_BANNER - 468x60</item>-->
+        <item>MEDIUM_RECTANGLE - 300x250</item>
+        <item>SMART_BANNER</item>
+        <item>FULL_BANNER - 468x60</item>
         <item>LARGE_BANNER - 320x100</item>
         <!--<item>LEADERBOARD - 728x90</item>-->
-        <item>MEDIUM_RECTANGLE - 300x250</item>
+
         <!--<item>WIDE_SKYSCRAPER - 160x600</item>-->
-        <item>SMART_BANNER</item>
-        <item>FLUID</item>
+
+
     </string-array>
 
 </resources>
