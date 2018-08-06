@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <corners
+        android:bottomLeftRadius="@dimen/module_tiny"
+        android:bottomRightRadius="@dimen/module_tiny"
+        android:radius="@dimen/module_tiny"
+        android:topLeftRadius="@dimen/module_tiny"
+        android:topRightRadius="@dimen/module_tiny" />
+
+    <solid android:color="@color/ad_badge_background" />
+
+</shape>

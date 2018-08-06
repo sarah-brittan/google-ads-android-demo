@@ -103,18 +103,11 @@
             android:text="VISIT SITE"
             android:textAllCaps="true"
             android:textColor="@color/call_to_actionbtn_color"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:visibility="visible" />
 
     </LinearLayout>
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/ad_badge"
-        android:layout_width="@dimen/module_base_9"
-        android:layout_height="@dimen/module_base_9"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/ad_badge" />
+    <include layout="@layout/tv_ad_attribution"/>
 
 </RelativeLayout>

@@ -134,8 +134,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//
-
     private void displayChosenAd(String adName, final FrameLayout nativeAdContainer) {
 
         nativeAdContainer.removeAllViews();
@@ -194,6 +192,8 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         adLoader.loadAd(new PublisherAdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E")
                 .build());
     }
 
@@ -253,6 +253,8 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         adLoader.loadAd(new PublisherAdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E")
                 .build());
     }
 
@@ -281,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
     // ======= COMPLEX UNIFIED NATIVE AD ========
 
     protected void loadComplexUnifiedAd() {
-        String adUnitId = getString(R.string.native_demo_ad_unit_id);
+        String adUnitId = getString(R.string.pan_staggered_ad_unit_id);
         Log.d("Ad-Unit", "Using Ad Unit " + adUnitId);
 
         VideoOptions videoOptions = new VideoOptions.Builder()
@@ -310,14 +312,17 @@ public class MainActivity extends AppCompatActivity {
                         .build())
                 .build();
 
-        adLoader.loadAd(new PublisherAdRequest.Builder().build());
+        adLoader.loadAd(new PublisherAdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E")
+                .build());
 
         // videoStatus.setText("");
     }
 
     private void displayComplexUnifiedAd(ViewGroup parent, final UnifiedNativeAd nativeAd) {
         UnifiedNativeAdView adView = (UnifiedNativeAdView) getLayoutInflater()
-                .inflate(R.layout.complex_unified_ad, null);
+                .inflate(R.layout.pan_staggered_unified_ad, null);
 
         // Get the video controller for the ad. One will always be provided, even if the ad doesn't
         // have a video asset.
@@ -331,7 +336,6 @@ public class MainActivity extends AppCompatActivity {
                 // Publishers should allow native ads to complete video playback before refreshing
                 // or replacing them with another ad in the same UI location.
                 newAdButton.setEnabled(true);
-                //  videoStatus.setText("Video status: Video playback has ended.");
                 super.onVideoEnd();
             }
         });
@@ -344,9 +348,6 @@ public class MainActivity extends AppCompatActivity {
         if (vc.hasVideoContent()) {
             adView.setMediaView(mediaView);
             mainImageView.setVisibility(View.GONE);
-//            videoStatus.setText(String.format(Locale.getDefault(),
-//                    "Video status: Ad contains a %.2f:1 video asset.",
-//                    vc.getAspectRatio()));
         } else {
             adView.setImageView(mainImageView);
             mediaView.setVisibility(View.GONE);
@@ -356,7 +357,6 @@ public class MainActivity extends AppCompatActivity {
             mainImageView.setImageDrawable(images.get(0).getDrawable());
 
             newAdButton.setEnabled(true);
-            //   videoStatus.setText("Video status: Ad does not contain a video asset.");
         }
 
         adView.setHeadlineView(adView.findViewById(R.id.ad_headline));
@@ -384,21 +384,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (nativeAd.getPrice() == null) {
-            adView.getPriceView().setVisibility(View.INVISIBLE);
+            adView.getPriceView().setVisibility(View.GONE);
         } else {
             adView.getPriceView().setVisibility(View.VISIBLE);
             ((TextView) adView.getPriceView()).setText(nativeAd.getPrice());
         }
 
         if (nativeAd.getStore() == null) {
-            adView.getStoreView().setVisibility(View.INVISIBLE);
+            adView.getStoreView().setVisibility(View.GONE);
         } else {
             adView.getStoreView().setVisibility(View.VISIBLE);
             ((TextView) adView.getStoreView()).setText(nativeAd.getStore());
         }
 
         if (nativeAd.getStarRating() == null) {
-            adView.getStarRatingView().setVisibility(View.INVISIBLE);
+            adView.getStarRatingView().setVisibility(View.GONE);
         } else {
             ((RatingBar) adView.getStarRatingView())
                     .setRating(nativeAd.getStarRating().floatValue());
@@ -406,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (nativeAd.getAdvertiser() == null) {
-            adView.getAdvertiserView().setVisibility(View.INVISIBLE);
+            adView.getAdvertiserView().setVisibility(View.GONE);
         } else {
             ((TextView) adView.getAdvertiserView()).setText(nativeAd.getAdvertiser());
             adView.getAdvertiserView().setVisibility(View.VISIBLE);
@@ -421,7 +421,7 @@ public class MainActivity extends AppCompatActivity {
     // ========= PAN LISTING / STAGGERED ==========
 
     private void loadPanameraStaggeredInstallAd() {
-        String adUnitId = getString(R.string.native_demo_ad_unit_id);
+        String adUnitId = getString(R.string.pan_staggered_ad_unit_id);
         Log.d("Ad-Unit", "Using Ad Unit " + adUnitId);
 
 
@@ -449,6 +449,8 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         adLoader.loadAd(new PublisherAdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E")
                 .build());
 
     }
