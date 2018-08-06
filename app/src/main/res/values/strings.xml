@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Native Ads Examples</string>
     <string name="native_demo_ad_unit_id">/6499/example/native</string>
+    <string name="fluid_demo_ad_unit_id">/6499/example/apidemo/fluid</string>
     <string name="codelab_demo_custom_ad_unit_id">/13657173/codelab</string>
     <string name="codelab_template_id">10054853</string>
     <string name="ad_attribution">Ad</string>
@@ -9,10 +10,21 @@
     <string name="unified_ad_complex">Complex Unified</string>
     <string name="pan_listing">Install/Content</string>
     <string name="banner">Banner</string>
-    <string name="fluid_ad">Fluid</string>
+    <string name="choose_ad">Choose Ad</string>
     <string name="new_ad">Refresh Ad</string>
     <string name="sponsored">Sponsored</string>
     <string name="headline">Headline</string>
     <string name="body">Body of ad goes here</string>
+
+    <string-array name="ad_types">
+        <item>BANNER - 320x50</item>
+        <!--<item>FULL_BANNER - 468x60</item>-->
+        <item>LARGE_BANNER - 320x100</item>
+        <!--<item>LEADERBOARD - 728x90</item>-->
+        <item>MEDIUM_RECTANGLE - 300x250</item>
+        <!--<item>WIDE_SKYSCRAPER - 160x600</item>-->
+        <item>SMART_BANNER</item>
+        <item>FLUID</item>
+    </string-array>
 
 </resources>

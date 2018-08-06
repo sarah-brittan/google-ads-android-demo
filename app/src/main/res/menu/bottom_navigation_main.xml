@@ -14,10 +14,10 @@
         <!--android:icon="@drawable/ic_border_top"-->
         <!--app:showAsAction="ifRoom" />-->
     <item
-        android:id="@+id/unified_simple"
+        android:id="@+id/choose_ad"
         android:enabled="true"
-        android:title="@string/unified_ad_simple"
-        android:icon="@drawable/ic_border_top"
+        android:title="@string/choose_ad"
+        android:icon="@drawable/ic_blur_linear"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/unified_complex"

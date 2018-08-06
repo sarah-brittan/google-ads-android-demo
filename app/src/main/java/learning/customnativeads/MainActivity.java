@@ -8,18 +8,24 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.VideoController;
 import com.google.android.gms.ads.VideoOptions;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.android.gms.ads.formats.MediaView;
 import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.gms.ads.formats.NativeAdOptions;
@@ -65,9 +71,12 @@ public class MainActivity extends AppCompatActivity {
                                 loadCodeLabAd();
                                 bottomNavigationView.getMenu().findItem(R.id.code_lab).setChecked(true);
                                 break;
-                            case R.id.unified_simple:
-                                loadSimpleUnifiedNativeAd();
-                                bottomNavigationView.getMenu().findItem(R.id.unified_simple).setChecked(true);
+//                            case R.id.unified_simple:
+//                                loadSimpleUnifiedNativeAd();
+//                                bottomNavigationView.getMenu().findItem(R.id.unified_simple).setChecked(true);
+//                                break;
+                            case R.id.choose_ad:
+                                loadChooseAd();
                                 break;
                             case R.id.unified_complex:
                                 bottomNavigationView.getMenu().findItem(R.id.unified_complex).setChecked(true);
@@ -83,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -93,6 +103,73 @@ public class MainActivity extends AppCompatActivity {
     protected void refreshCurrentAd() {
         bottomNavigationView.setSelectedItemId(bottomNavigationView.getSelectedItemId());
     }
+
+    // ======= FLUID AD ========
+
+    private void loadChooseAd() {
+        adContainer.removeAllViews();
+
+        View chooseAdLayout = getLayoutInflater()
+                .inflate(R.layout.fragment_select_type, adContainer);
+
+       final FrameLayout publisherAdView = chooseAdLayout.findViewById(R.id.ad_view_container);
+
+        Spinner spinner = chooseAdLayout.findViewById(R.id.ad_type_elector_spinner);
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.ad_types, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String adName = adapter.getItem(position).toString();
+                displayChosenAd(adName, publisherAdView);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(MainActivity.this,"Nothing selected", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+//
+
+    private void displayChosenAd(String adName, final FrameLayout nativeAdContainer) {
+
+        nativeAdContainer.removeAllViews();
+        final AdType adType = new AdUtil().getAdType(adName);
+
+        PublisherAdView nativeAdView = new PublisherAdView(this);
+        nativeAdView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        nativeAdView.setAdUnitId(adType.getAdUnitId());
+        nativeAdView.setAdSizes(adType.getAdSize());
+        nativeAdContainer.addView(nativeAdView);
+
+        nativeAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+                super.onAdFailedToLoad(errorCode);
+                nativeAdContainer.setVisibility(View.GONE);
+                Toast.makeText(MainActivity.this, "Failed to load native ad: "
+                        + adType.getAdUnitId(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                nativeAdContainer.setVisibility(View.VISIBLE);
+            }
+        });
+
+        nativeAdView.loadAd(new PublisherAdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E")
+                .build());
+    }
+
 
     // ======= CODE LAB NATIVE AD ========
 
