@@ -1,4 +1,5 @@
 <com.google.android.gms.ads.formats.UnifiedNativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/complex_unified_ad"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -11,7 +12,7 @@
         android:minHeight="50dp"
         android:orientation="vertical">
 
-        <include layout="@layout/tv_ad_attribution"/>
+        <include layout="@layout/tv_ad_attribution_badge"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,6 +31,7 @@
                     android:id="@+id/ad_app_icon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:background="@color/colorAccent"
                     android:adjustViewBounds="true"
                     android:paddingBottom="5dp"
                     android:paddingEnd="5dp"
@@ -45,6 +47,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#0000FF"
+                        tools:text="Ad Headline will be here"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -57,6 +60,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="bottom"
+                            tools:text="Advertisier name"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -83,6 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
+                    tools:text="Ad body will be displayed here"
                     android:layout_marginRight="20dp"
                     android:textSize="12sp" />
 
@@ -90,6 +95,7 @@
                     android:id="@+id/ad_image"
                     android:layout_width="250dp"
                     android:layout_height="175dp"
+                    android:background="@color/ad_badge_background"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp" />
 
@@ -97,6 +103,7 @@
                     android:id="@+id/ad_media"
                     android:layout_width="250dp"
                     android:layout_height="175dp"
+                    android:background="@color/ad_badge_background"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp" />
 
@@ -116,6 +123,7 @@
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:paddingStart="5dp"
+                        tools:text="R100"
                         android:textSize="12sp" />
 
                     <TextView
@@ -125,6 +133,7 @@
                         android:paddingEnd="5dp"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
+                        tools:text="Google Play"
                         android:paddingStart="5dp"
                         android:textSize="12sp" />
 
@@ -133,6 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        tools:text="Call to action"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>

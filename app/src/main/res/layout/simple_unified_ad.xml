@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <include layout="@layout/tv_ad_attribution"/>
+        <include layout="@layout/tv_ad_attribution_badge"/>
 
         <TextView
             android:id="@+id/attribution"

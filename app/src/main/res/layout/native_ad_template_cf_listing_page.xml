@@ -108,6 +108,6 @@
 
     </LinearLayout>
 
-    <include layout="@layout/tv_ad_attribution"/>
+    <include layout="@layout/tv_ad_attribution_badge"/>
 
 </RelativeLayout>

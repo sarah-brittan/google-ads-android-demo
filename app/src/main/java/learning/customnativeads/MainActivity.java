@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
 
-    boolean showTestAds = false;
+    boolean showTestAds = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.unified_complex:
                                 bottomNavigationView.getMenu().findItem(R.id.unified_complex).setChecked(true);
-                                loadComplexUnifiedAd();
+                                setupPanameraChooser();
                                 break;
                             case R.id.pan_listing:
                                 bottomNavigationView.getMenu().findItem(R.id.pan_listing).setChecked(true);
@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
                         return false;
                     }
                 });
+
+        bottomNavigationView.setSelectedItemId(R.id.unified_complex);
     }
 
 
@@ -293,7 +295,35 @@ public class MainActivity extends AppCompatActivity {
 
     // ======= COMPLEX UNIFIED NATIVE AD ========
 
-    protected void loadComplexUnifiedAd() {
+    protected void setupPanameraChooser() {
+        adContainer.removeAllViews();
+
+        View chooseAdLayout = getLayoutInflater()
+                .inflate(R.layout.fragment_select_type, adContainer);
+
+        final FrameLayout adContainer = chooseAdLayout.findViewById(R.id.ad_view_container);
+
+        Spinner spinner = chooseAdLayout.findViewById(R.id.ad_type_elector_spinner);
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.display_types, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String displayType = adapter.getItem(position).toString();
+                loadComplexUnifiedAd(displayType, adContainer);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(MainActivity.this, "Nothing selected", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    protected void loadComplexUnifiedAd(final String displayType, final FrameLayout adContainer) {
         String adUnitId = getString(R.string.native_backfill_demo_ad_unit_id);
         Log.d("Ad-Unit", "Using Ad Unit " + adUnitId);
 
@@ -305,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
                 .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
                     @Override
                     public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
-                        displayComplexUnifiedAd(adContainer, unifiedNativeAd);
+                        displayComplexUnifiedAd(displayType, adContainer, unifiedNativeAd);
                     }
                 })
                 .withAdListener(new AdListener() {
@@ -332,12 +362,16 @@ public class MainActivity extends AppCompatActivity {
         adLoader.loadAd(requestBuilder.build());
     }
 
-    private void displayComplexUnifiedAd(ViewGroup parent, final UnifiedNativeAd nativeAd) {
+    private void displayComplexUnifiedAd(String displayType, FrameLayout adContainer, final UnifiedNativeAd nativeAd) {
 //        UnifiedNativeAdView adView = (UnifiedNativeAdView) getLayoutInflater()
 //                .inflate(R.layout.pan_staggered_unified_ad, null);
 
+        int layout = R.layout.pan_staggered_unified_ad;
+        if (displayType.equals("Gallery")) layout = R.layout.pan_gallery_unified_ad;
+        else if (displayType.equals("List")) layout = R.layout.pan_list_unified_ad;
+
         UnifiedNativeAdView adView = (UnifiedNativeAdView) getLayoutInflater()
-                .inflate(R.layout.pan_list_unified_ad, null);
+                .inflate(layout, null);
 
         // Get the video controller for the ad. One will always be provided, even if the ad doesn't
         // have a video asset.
@@ -434,8 +468,8 @@ public class MainActivity extends AppCompatActivity {
 
         adView.setNativeAd(nativeAd);
 
-        parent.removeAllViews();
-        parent.addView(adView);
+        adContainer.removeAllViews();
+        adContainer.addView(adView);
 
         nativeAd.destroy();
     }

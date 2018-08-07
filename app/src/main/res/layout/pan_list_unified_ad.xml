@@ -13,84 +13,89 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/ad_image"
-                android:layout_width="@dimen/ad_list_image_width"
-                android:layout_height="match_parent"
-                android:layout_gravity="left"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                tools:background="@color/black_87" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:background="@color/ad_badge_background"
+                android:layout_height="match_parent">
 
-            <com.google.android.gms.ads.formats.MediaView
-                android:id="@+id/ad_media"
+                <ImageView
+                    android:id="@+id/ad_image"
+                    android:layout_width="@dimen/ad_list_image_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    tools:background="@color/black_87" />
+
+                <com.google.android.gms.ads.formats.MediaView
+                    android:id="@+id/ad_media"
+                    android:layout_width="@dimen/ad_list_image_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:visibility="gone"
+                    tools:background="@color/black_87" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/ad_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:adjustViewBounds="true"
-                android:minHeight="200dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone"
-                tools:background="@color/black_87" />
+                android:orientation="vertical"
+                android:padding="@dimen/module_small">
 
                 <LinearLayout
-                    android:id="@+id/ad_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/module_small">
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/ad_app_icon"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginEnd="@dimen/module_tiny"
-                            android:adjustViewBounds="true"
-                            tools:src="@color/colorPrimaryDark" />
-
-                        <TextView
-                            android:id="@+id/ad_headline"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="sans-serif-medium"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            tools:text="Headline" />
-
-                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/ad_app_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="@dimen/module_tiny"
+                        android:adjustViewBounds="true"
+                        tools:src="@color/colorPrimaryDark" />
 
                     <TextView
-                        android:id="@+id/ad_advertiser"
+                        android:id="@+id/ad_headline"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="bottom"
-                        android:paddingTop="@dimen/module_tiny"
-                        android:textColor="@color/font_black_101010"
-                        android:textSize="12sp"
-                        tools:text="Advertiser" />
-
-                    <TextView
-                        android:id="@+id/ad_body"
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:paddingTop="@dimen/module_tiny"
-                        android:textSize="12sp"
-                        tools:text="Demo ad body text goes here" />
+                        android:layout_gravity="center"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        tools:text="Headline" />
+
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/ad_advertiser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:paddingTop="@dimen/module_tiny"
+                    android:textColor="@color/font_black_101010"
+                    android:textSize="12sp"
+                    tools:text="Advertiser" />
+
+                <TextView
+                    android:id="@+id/ad_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:paddingTop="@dimen/module_tiny"
+                    android:textSize="12sp"
+                    tools:text="Demo ad body text goes here" />
+            </LinearLayout>
 
         </LinearLayout>
 
-        <include layout="@layout/tv_ad_attribution" />
+        <include layout="@layout/tv_ad_attribution_badge" />
     </FrameLayout>
 </com.google.android.gms.ads.formats.UnifiedNativeAdView>
