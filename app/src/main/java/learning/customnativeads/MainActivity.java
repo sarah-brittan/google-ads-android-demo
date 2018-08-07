@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
 
-    boolean showTestAds = true;
+    boolean showTestAds = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -324,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void loadComplexUnifiedAd(final String displayType, final FrameLayout adContainer) {
-        String adUnitId = getString(R.string.native_backfill_demo_ad_unit_id);
+        String adUnitId = getString(R.string.pan_staggered_ad_unit_id);
         Log.d("Ad-Unit", "Using Ad Unit " + adUnitId);
 
         VideoOptions videoOptions = new VideoOptions.Builder()

@@ -10,13 +10,29 @@
     <dimen name="module_base_9">18dp</dimen>
     <dimen name="image_min_size">50dp</dimen>
 
-    <!-- font sizes -->
+
+    <!--Font Size-->
+    <dimen name="super_tiny_font">6sp</dimen>
+    <dimen name="really_very_tiny_font">8sp</dimen>
+    <dimen name="really_tiny_font">10sp</dimen>
+    <dimen name="very_tiny_font">11sp</dimen>
     <dimen name="tiny_font">12sp</dimen>
     <dimen name="small_font">14sp</dimen>
+    <dimen name="medium_font">16sp</dimen>
+    <dimen name="action_bar_text_size">20sp</dimen>
     <dimen name="roboto_medium">16sp</dimen>
     <dimen name="roboto_medium_big">18sp</dimen>
+    <dimen name="roboto_small">12sp</dimen>
+    <dimen name="roboto_big">20sp</dimen>
+    <dimen name="roboto_biggie">22sp</dimen>
+    <dimen name="roboto_bigger">24sp</dimen>
+    <dimen name="roboto_huge">28sp</dimen>
+    <dimen name="roboto_giant">48sp</dimen>
 
     <dimen name="ad_gallery_margin_left_right">4dp</dimen>
     <dimen name="ad_list_image_height">130dp</dimen>
     <dimen name="ad_list_image_width">130dp</dimen>
+    <dimen name="ad_app_icon_staggered_size">35dp</dimen>
+    <dimen name="ad_app_icon_list_size">30dp</dimen>
+    <dimen name="ad_app_icon_gallery_size">40dp</dimen>
 </resources>

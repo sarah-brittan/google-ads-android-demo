@@ -7,13 +7,14 @@
     <Spinner
         android:id="@+id/ad_type_elector_spinner"
         android:layout_width="wrap_content"
-        android:padding="@dimen/module_small"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:padding="@dimen/module_small" />
 
     <FrameLayout
         android:id="@+id/ad_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:descendantFocusability="blocksDescendants" />
+        android:descendantFocusability="blocksDescendants"
+        android:elevation="6dp" />
 </LinearLayout>
