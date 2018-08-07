@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
 
+    boolean showTestAds = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,10 +164,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        nativeAdView.loadAd(new PublisherAdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E")
-                .build());
+        PublisherAdRequest.Builder requestBuilder = new PublisherAdRequest.Builder();
+        if (showTestAds) {
+            requestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                    .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E");
+        }
+
+        nativeAdView.loadAd(requestBuilder.build());
     }
 
 
@@ -191,10 +196,13 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build();
 
-        adLoader.loadAd(new PublisherAdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E")
-                .build());
+        PublisherAdRequest.Builder requestBuilder = new PublisherAdRequest.Builder();
+        if (showTestAds) {
+            requestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                    .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E");
+        }
+
+        adLoader.loadAd(requestBuilder.build());
     }
 
     private void displayCodeLabCustomTemplateAd(FrameLayout parent, final NativeCustomTemplateAd ad) {
@@ -252,10 +260,13 @@ public class MainActivity extends AppCompatActivity {
                         .build())
                 .build();
 
-        adLoader.loadAd(new PublisherAdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E")
-                .build());
+        PublisherAdRequest.Builder requestBuilder = new PublisherAdRequest.Builder();
+        if (showTestAds) {
+            requestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                    .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E");
+        }
+
+        adLoader.loadAd(requestBuilder.build());
     }
 
     private void displaySimpleUnifiedAd(ViewGroup parent, final UnifiedNativeAd unifiedNativeAd) {
@@ -283,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
     // ======= COMPLEX UNIFIED NATIVE AD ========
 
     protected void loadComplexUnifiedAd() {
-        String adUnitId = getString(R.string.pan_staggered_ad_unit_id);
+        String adUnitId = getString(R.string.native_backfill_demo_ad_unit_id);
         Log.d("Ad-Unit", "Using Ad Unit " + adUnitId);
 
         VideoOptions videoOptions = new VideoOptions.Builder()
@@ -312,17 +323,21 @@ public class MainActivity extends AppCompatActivity {
                         .build())
                 .build();
 
-        adLoader.loadAd(new PublisherAdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E")
-                .build());
+        PublisherAdRequest.Builder requestBuilder = new PublisherAdRequest.Builder();
+        if (showTestAds) {
+            requestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                    .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E");
+        }
 
-        // videoStatus.setText("");
+        adLoader.loadAd(requestBuilder.build());
     }
 
     private void displayComplexUnifiedAd(ViewGroup parent, final UnifiedNativeAd nativeAd) {
+//        UnifiedNativeAdView adView = (UnifiedNativeAdView) getLayoutInflater()
+//                .inflate(R.layout.pan_staggered_unified_ad, null);
+
         UnifiedNativeAdView adView = (UnifiedNativeAdView) getLayoutInflater()
-                .inflate(R.layout.pan_staggered_unified_ad, null);
+                .inflate(R.layout.pan_list_unified_ad, null);
 
         // Get the video controller for the ad. One will always be provided, even if the ad doesn't
         // have a video asset.
@@ -347,9 +362,11 @@ public class MainActivity extends AppCompatActivity {
         // NativeAppInstallAd has a video asset.
         if (vc.hasVideoContent()) {
             adView.setMediaView(mediaView);
+            adView.setImageView(null);
             mainImageView.setVisibility(View.GONE);
         } else {
             adView.setImageView(mainImageView);
+            adView.setMediaView(null);
             mediaView.setVisibility(View.GONE);
 
             // At least one image is guaranteed.
@@ -371,12 +388,13 @@ public class MainActivity extends AppCompatActivity {
         // Some assets are guaranteed to be in every UnifiedNativeAd.
         ((TextView) adView.getHeadlineView()).setText(nativeAd.getHeadline());
         ((TextView) adView.getBodyView()).setText(nativeAd.getBody());
-        ((Button) adView.getCallToActionView()).setText(nativeAd.getCallToAction());
+        if (adView.getCallToActionView() != null)
+            ((Button) adView.getCallToActionView()).setText(nativeAd.getCallToAction());
 
         // These assets aren't guaranteed to be in every UnifiedNativeAd, so it's important to
         // check before trying to display them.
         if (nativeAd.getIcon() == null) {
-            adView.getIconView().setVisibility(View.GONE);
+            if (adView.getIconView() != null) adView.getIconView().setVisibility(View.GONE);
         } else {
             ((ImageView) adView.getIconView()).setImageDrawable(
                     nativeAd.getIcon().getDrawable());
@@ -384,21 +402,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (nativeAd.getPrice() == null) {
-            adView.getPriceView().setVisibility(View.GONE);
+            if (adView.getPriceView() != null) adView.getPriceView().setVisibility(View.GONE);
         } else {
             adView.getPriceView().setVisibility(View.VISIBLE);
             ((TextView) adView.getPriceView()).setText(nativeAd.getPrice());
         }
 
         if (nativeAd.getStore() == null) {
-            adView.getStoreView().setVisibility(View.GONE);
+            if (adView.getStoreView() != null) adView.getStoreView().setVisibility(View.GONE);
         } else {
             adView.getStoreView().setVisibility(View.VISIBLE);
             ((TextView) adView.getStoreView()).setText(nativeAd.getStore());
         }
 
         if (nativeAd.getStarRating() == null) {
-            adView.getStarRatingView().setVisibility(View.GONE);
+            if (adView.getStarRatingView() != null)
+                adView.getStarRatingView().setVisibility(View.GONE);
         } else {
             ((RatingBar) adView.getStarRatingView())
                     .setRating(nativeAd.getStarRating().floatValue());
@@ -406,7 +425,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (nativeAd.getAdvertiser() == null) {
-            adView.getAdvertiserView().setVisibility(View.GONE);
+            if (adView.getAdvertiserView() != null)
+                adView.getAdvertiserView().setVisibility(View.GONE);
         } else {
             ((TextView) adView.getAdvertiserView()).setText(nativeAd.getAdvertiser());
             adView.getAdvertiserView().setVisibility(View.VISIBLE);
@@ -416,6 +436,8 @@ public class MainActivity extends AppCompatActivity {
 
         parent.removeAllViews();
         parent.addView(adView);
+
+        nativeAd.destroy();
     }
 
     // ========= PAN LISTING / STAGGERED ==========
@@ -448,11 +470,13 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build();
 
-        adLoader.loadAd(new PublisherAdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E")
-                .build());
+        PublisherAdRequest.Builder requestBuilder = new PublisherAdRequest.Builder();
+        if (showTestAds) {
+            requestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                    .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E");
+        }
 
+        adLoader.loadAd(requestBuilder.build());
     }
 
     private void displayPanameraStaggeredContentAd(ViewGroup parent, NativeContentAd nativeAd) {

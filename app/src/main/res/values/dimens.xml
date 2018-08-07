@@ -17,4 +17,6 @@
     <dimen name="roboto_medium_big">18sp</dimen>
 
     <dimen name="ad_gallery_margin_left_right">4dp</dimen>
+    <dimen name="ad_list_image_height">130dp</dimen>
+    <dimen name="ad_list_image_width">130dp</dimen>
 </resources>

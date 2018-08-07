@@ -6,7 +6,6 @@
     android:background="@drawable/round_corner_ad_image"
     android:text="@string/ad_attribution"
     android:textColor="@color/black_87"
-    android:shadowColor="@color/ad_badge_shadow"
     android:elevation="4dp"
     android:textAlignment="center"
     android:paddingStart="@dimen/module_tiny"

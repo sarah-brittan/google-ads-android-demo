@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">Native Ads Examples</string>
     <string name="native_demo_ad_unit_id">/6499/example/native</string>
+    <string name="native_backfill_demo_ad_unit_id">/6499/example/native-backfill</string>
     <string name="banner_demo_ad_unit_id">/6499/example/banner</string>
     <string name="smart_banner_demo_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="fluid_demo_ad_unit_id">/6499/example/apidemo/fluid</string>
     <string name="codelab_demo_custom_ad_unit_id">/13657173/codelab</string>
     <string name="codelab_template_id">10054853</string>
+    <string name="dfp_native_template_id">10063170</string>
     <string name="ad_attribution">Ad</string>
     <string name="code_lab_example">Custom</string>
     <string name="unified_ad_simple">Basic Unified</string>
