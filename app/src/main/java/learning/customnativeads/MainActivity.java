@@ -364,11 +364,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayComplexUnifiedAd(String displayType, FrameLayout adContainer, final UnifiedNativeAd nativeAd) {
 //        UnifiedNativeAdView adView = (UnifiedNativeAdView) getLayoutInflater()
-//                .inflate(R.layout.pan_staggered_unified_ad, null);
+//                .inflate(R.layout.native_staggered_unified_ad, null);
 
-        int layout = R.layout.pan_staggered_unified_ad;
-        if (displayType.equals("Gallery")) layout = R.layout.pan_gallery_unified_ad;
-        else if (displayType.equals("List")) layout = R.layout.pan_list_unified_ad;
+        int layout = R.layout.native_staggered_unified_ad;
+        if (displayType.equals("Gallery")) layout = R.layout.native_gallery_unified_ad;
+        else if (displayType.equals("List")) layout = R.layout.native_list_unified_ad;
 
         UnifiedNativeAdView adView = (UnifiedNativeAdView) getLayoutInflater()
                 .inflate(layout, null);

@@ -18,8 +18,8 @@
 
             <FrameLayout
                 android:layout_width="wrap_content"
-                android:background="@color/ad_badge_background"
                 android:layout_height="match_parent">
+                <!--android:background="@color/ad_badge_background"-->
 
                 <ImageView
                     android:id="@+id/ad_image"
