@@ -101,8 +101,6 @@ public class UnifiedNativeFragment extends BaseAdsFragment {
         if(!isAdded()){
             return;
         }
-//        UnifiedNativeAdView adView = (UnifiedNativeAdView) getLayoutInflater()
-//                .inflate(R.layout.native_staggered_unified_ad, null);
 
         int layout = R.layout.native_staggered_unified_ad;
         if (displayType.equals("Gallery")) layout = R.layout.native_gallery_unified_ad;
@@ -113,6 +111,7 @@ public class UnifiedNativeFragment extends BaseAdsFragment {
 
         adContainer.removeAllViews();
         adContainer.addView(adView);
+
 
         // Get the video controller for the ad. One will always be provided, even if the ad doesn't
         // have a video asset.
@@ -130,9 +129,10 @@ public class UnifiedNativeFragment extends BaseAdsFragment {
             }
         });
 
+        assignNativeAdViews(adView);
+
         MediaView mediaView = adView.findViewById(R.id.ad_media);
         ImageView mainImageView = adView.findViewById(R.id.ad_image);
-
         // Apps can check the VideoController's hasVideoContent property to determine if the
         // NativeAppInstallAd has a video asset.
         if (vc.hasVideoContent()) {
@@ -151,6 +151,13 @@ public class UnifiedNativeFragment extends BaseAdsFragment {
             newAdButton.setEnabled(true);
         }
 
+
+        populateNativeAdView(nativeAd, adView);
+
+        nativeAd.destroy();
+    }
+
+    private void assignNativeAdViews(UnifiedNativeAdView adView){
         adView.setHeadlineView(adView.findViewById(R.id.ad_headline));
         adView.setBodyView(adView.findViewById(R.id.ad_body));
         adView.setCallToActionView(adView.findViewById(R.id.ad_call_to_action));
@@ -159,7 +166,9 @@ public class UnifiedNativeFragment extends BaseAdsFragment {
         adView.setStarRatingView(adView.findViewById(R.id.ad_stars));
         adView.setStoreView(adView.findViewById(R.id.ad_store));
         adView.setAdvertiserView(adView.findViewById(R.id.ad_advertiser));
+    }
 
+    private void populateNativeAdView(UnifiedNativeAd nativeAd, UnifiedNativeAdView adView){
         // Some assets are guaranteed to be in every UnifiedNativeAd.
         ((TextView) adView.getHeadlineView()).setText(nativeAd.getHeadline());
         ((TextView) adView.getBodyView()).setText(nativeAd.getBody());
@@ -208,11 +217,6 @@ public class UnifiedNativeFragment extends BaseAdsFragment {
         }
 
         adView.setNativeAd(nativeAd);
-
-//        adContainer.removeAllViews();
-//        adContainer.addView(adView);
-
-        nativeAd.destroy();
     }
 
 }
