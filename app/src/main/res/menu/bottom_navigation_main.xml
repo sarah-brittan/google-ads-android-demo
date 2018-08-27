@@ -2,34 +2,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/code_lab"
+        android:id="@+id/bottom_bar_1"
         android:enabled="true"
-        android:title="@string/code_lab_example"
+        android:title="@string/bottom_bar_1"
         android:icon="@drawable/ic_border_style"
         app:showAsAction="ifRoom" />
-    <!--<item-->
-        <!--android:id="@+id/unified_simple"-->
-        <!--android:enabled="true"-->
-        <!--android:title="@string/unified_ad_simple"-->
-        <!--android:icon="@drawable/ic_border_top"-->
-        <!--app:showAsAction="ifRoom" />-->
     <item
-        android:id="@+id/choose_ad"
+        android:id="@+id/bottom_bar_2"
         android:enabled="true"
-        android:title="@string/choose_ad"
+        android:title="@string/bottom_bar_2"
+        android:icon="@drawable/ic_border_top"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/bottom_bar_3"
+        android:enabled="true"
+        android:title="@string/bottom_bar_3"
         android:icon="@drawable/ic_blur_linear"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/unified_complex"
+        android:id="@+id/bottom_bar_4"
         android:enabled="true"
-        android:title="@string/unified_ad_complex"
+        android:title="@string/bottom_bar_4"
         android:icon="@drawable/ic_border_vertical"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/pan_listing"
+        android:id="@+id/bottom_bar_5"
         android:enabled="true"
-        android:title="@string/pan_listing"
+        android:title="@string/bottom_bar_5"
         android:icon="@drawable/ic_border_all"
         app:showAsAction="ifRoom" />
 </menu>

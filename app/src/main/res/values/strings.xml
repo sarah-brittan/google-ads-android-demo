@@ -9,11 +9,11 @@
     <string name="codelab_template_id">10054853</string>
     <string name="dfp_native_template_id">10063170</string>
     <string name="ad_attribution">Ad</string>
-    <string name="code_lab_example">Custom</string>
-    <string name="unified_ad_simple">Basic Unified</string>
-    <string name="unified_ad_complex">Complex Unified</string>
-    <string name="pan_listing">Install/Content</string>
-    <string name="banner">Banner</string>
+    <string name="bottom_bar_1">Scrolling</string>
+    <string name="bottom_bar_2">Unified</string>
+    <string name="bottom_bar_3">Banner</string>
+    <string name="bottom_bar_4">Jupiter</string>
+    <string name="bottom_bar_5">Custom</string>
     <string name="choose_ad">Choose Ad</string>
     <string name="new_ad">Refresh Ad</string>
     <string name="sponsored">Sponsored</string>
