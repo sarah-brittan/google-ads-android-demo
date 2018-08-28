@@ -18,8 +18,6 @@ package learning.customnativeads;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,7 +28,7 @@ import android.widget.TextView;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAdView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * The {@link RecyclerViewAdapter} class.
@@ -45,13 +43,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final Context mContext;
 
     // The list of menu items.
-    private final List<Object> mRecyclerViewItems;
+    private ArrayList<Object> mRecyclerViewItems;
 
     /**
      * For this example app, the recyclerViewItems list contains only
      * {@link ScrollingItem} types.
      */
-    public RecyclerViewAdapter(Context context, List<Object> recyclerViewItems) {
+    public RecyclerViewAdapter(Context context, ArrayList<Object> recyclerViewItems) {
         this.mContext = context;
         this.mRecyclerViewItems = recyclerViewItems;
     }
@@ -89,7 +87,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public int getItemViewType(int position) {
 
         Object recyclerViewItem = mRecyclerViewItems.get(position);
-        if(recyclerViewItem instanceof UnifiedNativeAd){
+        if (recyclerViewItem instanceof UnifiedNativeAd) {
             return UNIFIED_NATIVE_VIEW_TYPE;
         }
         return MENU_ITEM_VIEW_TYPE;
@@ -101,7 +99,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
-        switch(viewType){
+        switch (viewType) {
             case UNIFIED_NATIVE_VIEW_TYPE:
                 View unifiedNativeLayoutView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_list_unified_ad, viewGroup, false);
                 return new UnifiedNativeAdViewHolder(unifiedNativeLayoutView);
@@ -120,8 +118,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      */
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
         int viewType = getItemViewType(position);
-        switch (viewType){
+        switch (viewType) {
             case UNIFIED_NATIVE_VIEW_TYPE:
                 UnifiedNativeAd nativeAd = (UnifiedNativeAd) mRecyclerViewItems.get(position);
                 populateNativeAdView(nativeAd, ((UnifiedNativeAdViewHolder) holder).getAdView());
@@ -130,11 +129,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 //default
             default:
                 ScrollingItem menuItem = (ScrollingItem) mRecyclerViewItems.get(position);
-                populateMenuItemView(menuItem, ((MenuItemViewHolder)holder));
+                populateMenuItemView(menuItem, ((MenuItemViewHolder) holder));
         }
     }
 
-    private void populateMenuItemView(ScrollingItem menuItem, MenuItemViewHolder holder){
+    public void updateObjects(ArrayList<Object> newObjects) {
+        mRecyclerViewItems = newObjects;
+        notifyDataSetChanged();
+    }
+
+    public void insertObject(int pos, Object newObject) {
+        if (pos <= mRecyclerViewItems.size()) {
+            mRecyclerViewItems.add(pos, newObject);
+            notifyItemInserted(pos);
+        }
+    }
+
+    private void populateMenuItemView(ScrollingItem menuItem, MenuItemViewHolder holder) {
 
         // Get the menu item image resource ID.
         String imageName = menuItem.getImageName();
@@ -149,7 +160,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         holder.menuItemDescription.setText(menuItem.getDescription());
     }
 
-    private void populateNativeAdView(UnifiedNativeAd nativeAd, UnifiedNativeAdView adView){
+    private void populateNativeAdView(UnifiedNativeAd nativeAd, UnifiedNativeAdView adView) {
         // Some assets are guaranteed to be in every UnifiedNativeAd.
         ((TextView) adView.getHeadlineView()).setText(nativeAd.getHeadline());
         ((TextView) adView.getBodyView()).setText(nativeAd.getBody());

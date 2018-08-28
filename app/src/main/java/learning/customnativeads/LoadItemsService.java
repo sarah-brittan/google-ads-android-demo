@@ -3,6 +3,9 @@ package learning.customnativeads;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,12 +19,18 @@ import java.util.List;
 
 public class LoadItemsService {
 
+    public static final int NUM_OF_ADS = 5;
+
+    private AdLoader adLoader;
+
+    private List<UnifiedNativeAd> nativeAds = new ArrayList<>();
+
     /**
      * Adds {@link ScrollingItem}'s from a JSON file.
      */
-    public static List<Object> addMenuItemsFromJson(Context context) {
+    public static ArrayList<Object> addMenuItemsFromJson(Context context) {
 
-        List<Object> items = new ArrayList<>();
+        ArrayList<Object> items = new ArrayList<>();
         try {
             String jsonDataString = readJsonDataFromFile(context);
             JSONArray menuItemsJsonArray = new JSONArray(jsonDataString);
@@ -72,5 +81,9 @@ public class LoadItemsService {
         }
 
         return new String(builder);
+    }
+
+    public static String getListAdUnitId(Context context) {
+        return context.getResources().getString(R.string.pan_staggered_ad_unit_id);
     }
 }
