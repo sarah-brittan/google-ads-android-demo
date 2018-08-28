@@ -44,8 +44,8 @@ public class RecyclerViewFragment extends Fragment {
     private ArrayList<Object> mRecyclerViewItems;
 
     public static final int NUM_OF_ADS = 3;
-    public static final int DEFAULT_OFFSET = 5;
-    public static final int VISIBLE_THRESHOLD = 5;
+    public static final int DEFAULT_OFFSET = 3;
+    public static final int INITIAL_OFFSET = 3;
     private int adFetchedCount = 0;
     private int adAddedCount = 0;
 
@@ -100,7 +100,7 @@ public class RecyclerViewFragment extends Fragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                if (lastVisibleItem % VISIBLE_THRESHOLD == 0 && hasPreloadedAd && lastVisibleItem >= (DEFAULT_OFFSET * adFetchedCount)) {
+                if (lastVisibleItem % DEFAULT_OFFSET == 0 && hasPreloadedAd && lastVisibleItem >= (DEFAULT_OFFSET * adFetchedCount)) {
                     insertNativeAdsIntoList();
                 }
             }
@@ -161,16 +161,19 @@ public class RecyclerViewFragment extends Fragment {
             return; //No ads to insert
         }
 
-        for (UnifiedNativeAd ad : nativeAds) {
+        for (final UnifiedNativeAd ad : nativeAds) {
             adapter.insertObject(index, ad);
-            index += DEFAULT_OFFSET;
+            index += DEFAULT_OFFSET + 1;
         }
 
-        adAddedCount++;
-        Log.d("Ads: ", "Ads added = " + adAddedCount);
+        if (adAddedCount * (DEFAULT_OFFSET+1) < (adapter.getItemCount() - DEFAULT_OFFSET*2)) {
+            loadNativeAd();
+            adAddedCount++;
+            Log.d("Ads: ", "Ads added = " + adAddedCount + " Total items = "+adapter.getItemCount());
+            hasPreloadedAd = false;
+        }
 
-        hasPreloadedAd = false;
-        loadNativeAd();
+
     }
 
 }

@@ -16,6 +16,7 @@
 package learning.customnativeads;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -138,10 +139,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyDataSetChanged();
     }
 
-    public void insertObject(int pos, Object newObject) {
+    public void insertObject(final int pos, Object newObject) {
         if (pos <= mRecyclerViewItems.size()) {
             mRecyclerViewItems.add(pos, newObject);
-            notifyItemInserted(pos);
+            //notifyItemInserted(pos);
+
+            Handler handler = new Handler();
+
+            final Runnable r = new Runnable() {
+                public void run() {
+                    RecyclerViewAdapter.this.notifyItemInserted(pos);
+                }
+            };
+
+            handler.post(r);
         }
     }
 
