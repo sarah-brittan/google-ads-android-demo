@@ -2,6 +2,7 @@ package learning.customnativeads.fragments;
 
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,12 +20,9 @@ import com.google.android.gms.ads.VideoController;
 import com.google.android.gms.ads.VideoOptions;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.formats.MediaView;
-import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.gms.ads.formats.NativeAdOptions;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAdView;
-
-import java.util.List;
 
 import learning.customnativeads.R;
 
@@ -148,6 +146,23 @@ public class UnifiedNativeFragment extends BaseAdsFragment {
         adView.setStoreView(adView.findViewById(R.id.ad_store));
         adView.setAdvertiserView(adView.findViewById(R.id.ad_advertiser));
         adView.setMediaView((MediaView) adView.findViewById(R.id.ad_media));
+
+        MediaView mediaView = adView.findViewById(R.id.ad_media);
+        adView.setMediaView(mediaView);
+        mediaView.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+            @Override
+            public void onChildViewAdded(View parent, View child) {
+                if(child instanceof ImageView){
+                    ImageView imageView = (ImageView) child;
+                    imageView.setAdjustViewBounds(true);
+                }
+            }
+
+            @Override
+            public void onChildViewRemoved(View parent, View child) {
+                //not needed
+            }
+        });
     }
 
     private void populateNativeAdView(UnifiedNativeAd nativeAd, UnifiedNativeAdView adView) {
