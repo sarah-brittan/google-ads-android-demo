@@ -179,42 +179,51 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         // These assets aren't guaranteed to be in every UnifiedNativeAd, so it's important to
         // check before trying to display them.
-        if (nativeAd.getIcon() == null) {
-            if (adView.getIconView() != null) adView.getIconView().setVisibility(View.GONE);
-        } else {
-            ((ImageView) adView.getIconView()).setImageDrawable(
-                    nativeAd.getIcon().getDrawable());
-            adView.getIconView().setVisibility(View.VISIBLE);
+        if (adView.getIconView() != null) {
+            if (nativeAd.getIcon() == null) {
+                adView.getIconView().setVisibility(View.GONE);
+            } else {
+                ((ImageView) adView.getIconView()).setImageDrawable(
+                        nativeAd.getIcon().getDrawable());
+                adView.getIconView().setVisibility(View.VISIBLE);
+            }
         }
 
-        if (nativeAd.getPrice() == null) {
-            if (adView.getPriceView() != null) adView.getPriceView().setVisibility(View.GONE);
-        } else {
-            adView.getPriceView().setVisibility(View.VISIBLE);
-            ((TextView) adView.getPriceView()).setText(nativeAd.getPrice());
+        if (adView.getPriceView() != null) {
+            if (nativeAd.getPrice() == null) {
+                adView.getPriceView().setVisibility(View.GONE);
+            } else {
+                adView.getPriceView().setVisibility(View.VISIBLE);
+                ((TextView) adView.getPriceView()).setText(nativeAd.getPrice());
+            }
         }
 
-        if (nativeAd.getStore() == null) {
-            if (adView.getStoreView() != null) adView.getStoreView().setVisibility(View.GONE);
-        } else {
-            adView.getStoreView().setVisibility(View.VISIBLE);
-            ((TextView) adView.getStoreView()).setText(nativeAd.getStore());
+        if (adView.getStoreView() != null) {
+            if (nativeAd.getStore() == null) {
+                adView.getStoreView().setVisibility(View.GONE);
+            } else {
+                adView.getStoreView().setVisibility(View.VISIBLE);
+                ((TextView) adView.getStoreView()).setText(nativeAd.getStore());
+            }
         }
 
-        if (nativeAd.getStarRating() == null) {
-            if (adView.getStarRatingView() != null)
+        if (adView.getStarRatingView() != null) {
+            if (nativeAd.getStarRating() == null) {
                 adView.getStarRatingView().setVisibility(View.GONE);
-        } else {
-            ((RatingBar) adView.getStarRatingView()).setRating(nativeAd.getStarRating().floatValue());
-            adView.getStarRatingView().setVisibility(View.VISIBLE);
+            } else {
+                ((RatingBar) adView.getStarRatingView())
+                        .setRating(nativeAd.getStarRating().floatValue());
+                adView.getStarRatingView().setVisibility(View.VISIBLE);
+            }
         }
 
-        if (nativeAd.getAdvertiser() == null) {
-            if (adView.getAdvertiserView() != null)
+        if (adView.getAdvertiserView() != null) {
+            if (nativeAd.getAdvertiser() == null) {
                 adView.getAdvertiserView().setVisibility(View.GONE);
-        } else {
-            ((TextView) adView.getAdvertiserView()).setText(nativeAd.getAdvertiser());
-            adView.getAdvertiserView().setVisibility(View.VISIBLE);
+            } else {
+                ((TextView) adView.getAdvertiserView()).setText(nativeAd.getAdvertiser());
+                adView.getAdvertiserView().setVisibility(View.VISIBLE);
+            }
         }
 
         adView.setNativeAd(nativeAd);
