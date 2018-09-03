@@ -32,38 +32,30 @@ import com.google.android.gms.ads.formats.UnifiedNativeAd;
 
 import java.util.ArrayList;
 
+import learning.customnativeads.LoadItemsService;
 import learning.customnativeads.MainActivity;
 import learning.customnativeads.R;
 import learning.customnativeads.RecyclerViewAdapter;
-
-import static learning.customnativeads.LoadItemsService.addMenuItemsFromJson;
 
 public class RecyclerViewFragment extends Fragment {
 
     // List of MenuItems that populate the RecyclerView.
     private ArrayList<Object> mRecyclerViewItems;
 
-    public static final int NUM_OF_ADS = 3;
-    public static final int DEFAULT_OFFSET = 3;
-    public static final int INITIAL_OFFSET = 3;
+    public static final int DEFAULT_OFFSET = 10;
     private int adFetchedCount = 0;
-    private int adAddedCount = 0;
-
+    private int nativeAdsAddedCount = 0;
+    private UnifiedNativeAd preloadedNativeAd;
+    private int adInsertIndex = DEFAULT_OFFSET;
     private AdLoader adLoader;
 
-    private ArrayList<UnifiedNativeAd> nativeAds = new ArrayList<>();
 
     private MainActivity activity;
 
     private RecyclerViewAdapter adapter;
 
-    private RecyclerView mRecyclerView;
-
     private LinearLayoutManager layoutManager;
 
-    private boolean hasPreloadedAd = false;
-
-    private int index = DEFAULT_OFFSET;
 
     public RecyclerViewFragment() {
         // Required empty public constructor
@@ -76,7 +68,7 @@ public class RecyclerViewFragment extends Fragment {
         setRetainInstance(true);
 
         activity = (MainActivity) getActivity();
-        mRecyclerViewItems = addMenuItemsFromJson(activity);
+        mRecyclerViewItems =  LoadItemsService.addMenuItemsFromJson(activity);
         loadNativeAd();
     }
 
@@ -86,7 +78,7 @@ public class RecyclerViewFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_recycler_view, container, false);
-        mRecyclerView = rootView.findViewById(R.id.recycler_view);
+        RecyclerView mRecyclerView = rootView.findViewById(R.id.recycler_view);
 
         // Use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView.
@@ -100,7 +92,7 @@ public class RecyclerViewFragment extends Fragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                if (lastVisibleItem % DEFAULT_OFFSET == 0 && hasPreloadedAd && lastVisibleItem >= (DEFAULT_OFFSET * adFetchedCount)) {
+                if (lastVisibleItem % DEFAULT_OFFSET == 0 && preloadedNativeAd != null && lastVisibleItem >= (DEFAULT_OFFSET * adFetchedCount)) {
                     insertNativeAdsIntoList();
                 }
             }
@@ -114,7 +106,7 @@ public class RecyclerViewFragment extends Fragment {
     }
 
     private void loadNativeAd() {
-        AdLoader.Builder builder = new AdLoader.Builder(activity, getListAdUnitId(activity));
+        AdLoader.Builder builder = new AdLoader.Builder(activity,  LoadItemsService.getListAdUnitId(activity));
         adLoader = builder
                 .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
                     @Override
@@ -122,10 +114,9 @@ public class RecyclerViewFragment extends Fragment {
                         adFetchedCount++;
                         Log.d("Ads: ", "Ads fetched = " + adFetchedCount);
                         // A native ad loaded successfully, check if the ad loader has finished loading and if so, insert the ads into the list.
-                        nativeAds.add(unifiedNativeAd);
+                        preloadedNativeAd = unifiedNativeAd;
                         if (!adLoader.isLoading()) {
-                            hasPreloadedAd = true;
-                            if (adAddedCount == 0) {
+                            if (nativeAdsAddedCount == 0) {
                                 insertNativeAdsIntoList();
                             }
                         }
@@ -137,43 +128,29 @@ public class RecyclerViewFragment extends Fragment {
                         // A native ad failed to load, check if the ad loader has finished loading and if so, insert the ads into the list.
                         Log.e("MainActivity", "The previous native ad failed to load. Attempting to load another.");
                         if (!adLoader.isLoading()) {
-                            hasPreloadedAd = false;
+                            preloadedNativeAd = null;
                         }
                     }
                 })
                 .build();
 
-        AdRequest.Builder requestBuilder = new AdRequest.Builder();
-        if (activity.shouldShowTestAds()) {
-            requestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                    .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E");
-        }
+        AdRequest.Builder requestBuilder = LoadItemsService.getAdRequestBuilder(activity.shouldShowTestAds());
 
         adLoader.loadAd(requestBuilder.build());
     }
-
-    public static String getListAdUnitId(Context context) {
-        return context.getResources().getString(R.string.pan_staggered_ad_unit_id);
-    }
-
     private void insertNativeAdsIntoList() {
-        if (nativeAds.size() <= 0) {
-            return; //No ads to insert
+        if (preloadedNativeAd != null) {
+            adapter.insertObject(adInsertIndex, preloadedNativeAd);
+            nativeAdsAddedCount++;
+            Log.d("Ads: ", "Ads added = " + nativeAdsAddedCount + " Total items = " + adapter.getItemCount());
+            adInsertIndex += DEFAULT_OFFSET + 1;
+            preloadedNativeAd = null;
         }
 
-        for (final UnifiedNativeAd ad : nativeAds) {
-            adapter.insertObject(index, ad);
-            index += DEFAULT_OFFSET + 1;
-        }
-
-        if (adAddedCount * (DEFAULT_OFFSET+1) < (adapter.getItemCount() - DEFAULT_OFFSET*2)) {
+        //Don't load another if we're close to the bottom already
+        if (nativeAdsAddedCount * (DEFAULT_OFFSET + 1) < (adapter.getItemCount() - DEFAULT_OFFSET)) {
             loadNativeAd();
-            adAddedCount++;
-            Log.d("Ads: ", "Ads added = " + adAddedCount + " Total items = "+adapter.getItemCount());
-            hasPreloadedAd = false;
         }
-
-
     }
 
 }

@@ -20,15 +20,6 @@
                 android:layout_height="match_parent">
                 <!--android:background="@color/ad_badge_background"-->
 
-                <ImageView
-                    android:id="@+id/ad_image"
-                    android:layout_width="@dimen/ad_list_image_width"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left|start"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerInside"
-                    tools:background="@color/black_87" />
-
                 <com.google.android.gms.ads.formats.MediaView
                     android:id="@+id/ad_media"
                     android:layout_width="@dimen/ad_list_image_width"

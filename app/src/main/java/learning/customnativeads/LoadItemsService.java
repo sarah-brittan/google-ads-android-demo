@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 
 import org.json.JSONArray;
@@ -18,12 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoadItemsService {
-
-    public static final int NUM_OF_ADS = 5;
-
-    private AdLoader adLoader;
-
-    private List<UnifiedNativeAd> nativeAds = new ArrayList<>();
 
     /**
      * Adds {@link ScrollingItem}'s from a JSON file.
@@ -85,5 +80,15 @@ public class LoadItemsService {
 
     public static String getListAdUnitId(Context context) {
         return context.getResources().getString(R.string.pan_staggered_ad_unit_id);
+    }
+
+    public static AdRequest.Builder getAdRequestBuilder(boolean shouldShowTestAds){
+        AdRequest.Builder requestBuilder = new AdRequest.Builder();
+        if (shouldShowTestAds) {
+            requestBuilder
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                    .addTestDevice("FD753978A2E3416E87E7AAEFD43C226E");
+        }
+        return requestBuilder;
     }
 }

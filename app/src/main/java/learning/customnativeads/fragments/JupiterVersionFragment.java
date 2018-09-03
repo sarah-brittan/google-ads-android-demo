@@ -144,7 +144,7 @@ public class JupiterVersionFragment extends BaseAdsFragment {
             String url = logoImage.getUri().toString();
             ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(activity));
             ImageLoader.getInstance().displayImage(url, mAdLogo, ImageUtils.getDisplayOptions());
-        } else {
+        } else if(mAdLogo != null) {
             mAdLogo.setVisibility(View.GONE);
 
         }

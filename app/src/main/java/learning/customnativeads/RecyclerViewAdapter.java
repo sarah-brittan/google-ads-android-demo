@@ -68,11 +68,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         MenuItemViewHolder(View view) {
             super(view);
-            menuItemImage = (ImageView) view.findViewById(R.id.menu_item_image);
-            menuItemName = (TextView) view.findViewById(R.id.menu_item_name);
-            menuItemPrice = (TextView) view.findViewById(R.id.menu_item_price);
-            menuItemCategory = (TextView) view.findViewById(R.id.menu_item_category);
-            menuItemDescription = (TextView) view.findViewById(R.id.menu_item_description);
+            menuItemImage = view.findViewById(R.id.menu_item_image);
+            menuItemName = view.findViewById(R.id.menu_item_name);
+            menuItemPrice = view.findViewById(R.id.menu_item_price);
+            menuItemCategory = view.findViewById(R.id.menu_item_category);
+            menuItemDescription = view.findViewById(R.id.menu_item_description);
         }
     }
 
@@ -142,7 +142,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void insertObject(final int pos, Object newObject) {
         if (pos <= mRecyclerViewItems.size()) {
             mRecyclerViewItems.add(pos, newObject);
-            //notifyItemInserted(pos);
 
             Handler handler = new Handler();
 
@@ -206,8 +205,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (adView.getStarRatingView() != null)
                 adView.getStarRatingView().setVisibility(View.GONE);
         } else {
-            ((RatingBar) adView.getStarRatingView())
-                    .setRating(nativeAd.getStarRating().floatValue());
+            ((RatingBar) adView.getStarRatingView()).setRating(nativeAd.getStarRating().floatValue());
             adView.getStarRatingView().setVisibility(View.VISIBLE);
         }
 
