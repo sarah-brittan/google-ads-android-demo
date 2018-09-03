@@ -1,5 +1,5 @@
 # Custom Native Ads Demo
-A demo of a few different ways of implementing DFP custom native ads.
+A demo of a few different ways of implementing Google Ads / DFP ads: including banners, unified native ads and custom native ads. 
 
 To use this, you will need to create new strings for the following:
 
